@@ -58,13 +58,14 @@ def get_data_one_hot(dataset, n_feature, batch_size, columns_sel):
     return DataLoader(train_dataset, batch_size=batch_size, shuffle=False), DataLoader(val_dataset, batch_size=batch_size), DataLoader(td, batch_size=batch_size, shuffle=False), columns_sel
 
 def train(dataset, n_feature, learning_rate, bs, columns_sel):
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     train_data, val_data, x, columns_sel = get_data_one_hot(dataset, n_feature, bs, columns_sel)
     x_train, y_train = x.dataset.tensors
-    model = make_anfis(x_train, num_mfs=3, num_out=2, hybrid=False)
+    model = make_anfis(x_train, device, num_mfs=3, num_out=2, hybrid=False)
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
-    model, score = experimental.train_anfis_cat(model, train_data, val_data, optimizer,100)
+    model, score = experimental.train_anfis_cat(model, train_data, val_data, optimizer,100, device)
     torch.save(model, 'models/model_' + dataset + '.h5')
-    load_model.metrics(dataset, columns_sel)
+    load_model.metrics(dataset, columns_sel, device)
     return model
 
 def opt(dataset, n_feature, learning_rate, bs, file_name, columns_sel):

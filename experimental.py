@@ -7,12 +7,12 @@ np.random.seed(seed)
 torch.manual_seed(seed)
 dtype = torch.float
 
-def make_one_hot(data, num_categories, dtype=torch.float):
+def make_one_hot(data, num_categories, device, dtype=torch.float):
     num_entries = len(data)
     # Convert data to a torch tensor of indices, with extra dimension:
     cats = torch.Tensor(data).long().unsqueeze(1)
     # Now convert this to one-hot representation:
-    y = torch.zeros((num_entries, num_categories), dtype=dtype)\
+    y = torch.zeros((num_entries, num_categories), dtype=dtype, device=device)\
         .scatter(1, cats, 1)
     y.requires_grad = True
     return y
@@ -24,8 +24,7 @@ def multi_acc(y_pred, y_test):
     acc = correct_pred.sum() / len(correct_pred)
     return acc
 
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-def train_anfis_cat(model, train_loader, val_loader, optimizer, EPOCHS):
+def train_anfis_cat(model, train_loader, val_loader, optimizer, EPOCHS, device):
     print(device)
     print("Begin training.")
     accuracy_stats = {
@@ -62,7 +61,7 @@ def train_anfis_cat(model, train_loader, val_loader, optimizer, EPOCHS):
         with torch.no_grad():
             val_epoch_loss = 0
             val_epoch_acc = 0
-            model.fit_coeff(X_train_batch.float(), make_one_hot(y_train_batch.float(), num_categories=2))
+            model.fit_coeff(X_train_batch.float(), make_one_hot(y_train_batch.float(), num_categories=2, device=device))
             for X_val_batch, y_val_batch in val_loader:
                 X_val_batch, y_val_batch = X_val_batch.to(device), y_val_batch.to(device)
 
