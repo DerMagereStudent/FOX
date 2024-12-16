@@ -1,0 +1,12 @@
+,Bell,DSigmoid,Gauss,Sigmoid,Triangular,best
+sepsis_cases_1,0.605,0.641,0.581,0.491,0.516,DSigmoid
+sepsis_cases_2,0.689,0.653,0.725,0.622,0.465,Gauss
+sepsis_cases_4,0.675,0.762,0.683,0.704,0.58,DSigmoid
+bpic2011_f1,0.962,0.899,0.968,0.975,0.561,Sigmoid
+bpic2011_f2,0.902,0.811,0.915,0.897,0.544,Gauss
+bpic2011_f3,,0.929,0.98,0.951,0.52,Gauss
+bpic2011_f4,0.868,0.828,0.888,0.857,0.78,Gauss
+bpic2012_accepted,0.63,0.603,0.636,0.595,0.578,Gauss
+bpic2012_declined,0.596,0.578,0.604,0.577,0.5,Gauss
+bpic2012_cancelled,0.682,0.679,0.685,0.646,0.475,Gauss
+production,0.727,0.599,0.742,0.587,0.503,Gauss

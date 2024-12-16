@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
-def metrics(dataset_name, columns_sel, device):
+def metrics(dataset_name, columns_sel, mfs_type, device):
     model = torch.load('models/model_' + dataset_name + '.h5')
 
     pd_len = pd.read_csv("dataset/"+dataset_name+"/len_test"+dataset_name+".csv", header=0, sep=',')
@@ -24,7 +24,7 @@ def metrics(dataset_name, columns_sel, device):
     y_test = pd.read_csv("dataset/"+dataset_name+"/"+dataset_name+"_test.csv")
     y_test = y_test[y_test.columns[-1]]
 
-    f = open(dataset_name+"_results.csv", "w")
+    f = open("results/"+dataset_name+"_"+str(mfs_type)+"_results.csv", "w")
     f.write("SELECTED COLUMNS;"+"\n")
     for element in columns_sel:
         f.write(element + "\n")

@@ -1,0 +1,10 @@
+SELECTED COLUMNS;
+Diagnosis Treatment Combination ID
+Diagnosis
+mean_open_cases
+Diagnosis code
+std_event_nr
+mean_event_nr
+Classification
+----------------;
+LENGHT;NUMBEROFSAMPLES;ROC_AUC_SCORE
